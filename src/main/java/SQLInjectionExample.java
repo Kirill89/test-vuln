@@ -1,20 +1,23 @@
 import java.sql.*;
 
 public class SQLInjectionExample {
-  public static void main(String[] args) throws SQLException {
-    String userInput = args[1];
-    String userInput2 = args[2];
+    public static void main(String[] args) throws SQLException {
+        String userInputA = System.getenv("A");
+        String userInputB = System.getenv("B");
 
-    String query = "SELECT * FROM users WHERE username = '" + userInput + "' AND password = '" + userInput2 + "'";
-    Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery(query);
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "root");
 
-    while (rs.next()) {
-      String username = rs.getString("username");
-      String password = rs.getString("password");
+        String query = "SELECT * FROM users WHERE username = '" + userInputA + "' AND password = '" +
+                userInputB + "'";
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
 
-      System.out.println("Username: " + username);
-      System.out.println("Password: " + password);
+        while (rs.next()) {
+            String username = rs.getString("username");
+            String password = rs.getString("password");
+
+            System.out.println("Username: " + username);
+            System.out.println("Password: " + password);
+        }
     }
-  }
 }
