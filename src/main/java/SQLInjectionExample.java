@@ -2,8 +2,8 @@ import java.sql.*;
 
 public class SQLInjectionExample {
     public static void main(String[] args) throws SQLException {
-        String userInputA = System.getenv("A");
-        String userInputB = System.getenv("B");
+        String userInputA = args[1];
+        String userInputB = args[2];
 
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "root");
 
